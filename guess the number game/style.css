@@ -1,0 +1,259 @@
+/* =============================================
+   style.css — All the visual styling lives here
+============================================= */
+
+/* --- COLOR VARIABLES (easy to change!) --- */
+:root {
+  --bg: #0f0f1a;
+  --card: #1a1a2e;
+  --accent: #e94560;
+  --accent2: #f5a623;
+  --green: #00c896;
+  --text: #f0f0f0;
+  --muted: #888;
+  --border: #2e2e4a;
+  --radius: 16px;
+}
+
+/* --- RESET: remove default browser spacing --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- BODY: full-screen dark background --- */
+body {
+  background: var(--bg);
+  /* Subtle dot-grid pattern for texture */
+  background-image: radial-gradient(circle, #ffffff0a 1px, transparent 1px);
+  background-size: 28px 28px;
+  font-family: 'Nunito', sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  /* Center the card on screen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* --- CARD: the white box holding the game --- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px 36px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 24px 64px #00000066;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative coloured stripe at top of card */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+}
+
+/* --- TITLE --- */
+.game-title {
+  font-family: 'Boogaloo', cursive;
+  font-size: 2.4rem;
+  text-align: center;
+  letter-spacing: 1px;
+  /* Gradient text effect */
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
+}
+
+.game-subtitle {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 28px;
+}
+
+/* --- RANGE BADGE (shows "1 to 100") --- */
+.range-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #ffffff08;
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  color: var(--accent2);
+  font-weight: 700;
+  margin-bottom: 28px;
+}
+
+/* --- INPUT ROW (text box + button side by side) --- */
+.input-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+/* Number input box */
+input[type="number"] {
+  flex: 1;
+  background: #ffffff0d;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 1.2rem;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+/* Hide the default up/down arrows on number input */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* Highlight border when user clicks the box */
+input[type="number"]:focus {
+  border-color: var(--accent);
+}
+
+/* --- BUTTONS --- */
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 14px 22px;
+  font-size: 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s, box-shadow 0.2s;
+}
+
+/* Slight shrink on click (feels interactive) */
+.btn:active {
+  transform: scale(0.96);
+}
+
+/* Red "Guess!" button */
+.btn-guess {
+  background: linear-gradient(135deg, var(--accent), #c0392b);
+  color: white;
+  box-shadow: 0 4px 20px #e9456040;
+}
+
+.btn-guess:hover {
+  box-shadow: 0 6px 28px #e9456066;
+}
+
+/* Disabled state (when game is won) */
+.btn-guess:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Grey "Restart" button */
+.btn-restart {
+  width: 100%;
+  background: #ffffff10;
+  color: var(--text);
+  border: 1px solid var(--border);
+  margin-top: 14px;
+}
+
+.btn-restart:hover {
+  background: #ffffff18;
+}
+
+/* --- MESSAGE BOX (shows Too High / Too Low / Correct) --- */
+.message-box {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: center;
+  background: #ffffff08;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+  line-height: 1.5;
+}
+
+/* Different colours for each result */
+.message-box.too-high { border-color: var(--accent);  color: var(--accent);  background: #e9456015; }
+.message-box.too-low  { border-color: var(--accent2); color: var(--accent2); background: #f5a62315; }
+.message-box.correct  { border-color: var(--green);   color: var(--green);   background: #00c89615; }
+.message-box.idle     { color: var(--muted); }
+
+/* --- ATTEMPTS ROW --- */
+.attempts-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.attempts-count {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--accent2);
+}
+
+/* --- GUESS HISTORY CHIPS --- */
+.history-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.history {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 28px;
+  margin-bottom: 4px;
+}
+
+/* Each past guess appears as a small coloured chip */
+.history-chip {
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.chip-high { background: #e9456022; color: var(--accent);  border: 1px solid #e9456044; }
+.chip-low  { background: #f5a62322; color: var(--accent2); border: 1px solid #f5a62344; }
+.chip-win  { background: #00c89622; color: var(--green);   border: 1px solid #00c89644; }
+
+/* --- WIN ANIMATION --- */
+@keyframes pop {
+  0%   { transform: scale(0.8); opacity: 0; }
+  60%  { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.celebrate {
+  animation: pop 0.4s ease forwards;
+}
